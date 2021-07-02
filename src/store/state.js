@@ -21,4 +21,6 @@ export default Vue.observable({
     limit: LIMIT,
     offset: OFFSET,
 
+    pokemonId: null,
+
 })

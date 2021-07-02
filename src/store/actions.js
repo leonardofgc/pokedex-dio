@@ -5,14 +5,6 @@ import state from './state';
 import mutations from './mutations';
 
 export default {
-    async getPokemonByName(name) {
-
-        const { setIsPokemonSearched } = mutations;
-        const pokemon = await PokeAPI.getPokemonByName(name);
-        if (pokemon) {
-            setIsPokemonSearched(pokemon);
-        }
-    },
     async getPokemons() {
         const {
             setList,
@@ -48,11 +40,22 @@ export default {
         }
     },
 
+    async getPokemonByName(name) {
+        //const { setIsPokemonSearched } = mutations;
+        const { setPokemonSearched } = mutations;
+        const pokemon = await PokeAPI.getPokemonByName(name);
+        if (pokemon) {
+            //setIsPokemonSearched(pokemon);
+            setPokemonSearched(pokemon);
+        }
+    },
+
     async searchPokemon(name) {
+        console.log(`Name: ${name}`);
         const {
             setIsPokemonSearch,
             setIsSearching,
-            setIsPokemonSearched,
+            setPokemonSearched,
             setSearchHasError,
             resetList,
         } = mutations;
@@ -71,7 +74,7 @@ export default {
             const pokemon = state.tmpList.find(info => info.name.toLowerCase() === name.toLowerCase());
 
             if (pokemon) {
-                setIsPokemonSearched(pokemon);
+                setPokemonSearched(pokemon);
                 return;
             }
 

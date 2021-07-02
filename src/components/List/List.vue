@@ -1,13 +1,16 @@
 <template>
   <ul class="list text--white bg--black">
-    <p v-if="isSearching" class="list--message">Looking for the pokemo</p>
+    <p v-if="isSearching" class="list--message">Looking for the pokemon</p>
     <p v-else-if="hasSearchError" class="list--message">
       We couldn't find this pokemon
     </p>
 
     <ListItem v-else-if="isPokemonSearch" v-bind="pokemonsList[0]" />
+
+    <PokemonDescription v-else-if="pokemonId" :id="pokemonId" />
+
     <template v-else>
-      <LisItem
+      <ListItem
         v-for="pokemon in pokemonsList"
         :key="pokemon.id"
         v-bind="pokemon"
@@ -20,10 +23,12 @@
 <script>
 import { state, getters, actions } from "@/store";
 import ListItem from "./ListItem.vue";
+import PokemonDescription from "@/components/PokemonDescription/PokemonDescription.vue";
 export default {
   name: "List",
   components: {
     ListItem,
+    PokemonDescription,
   },
   computed: {
     pokemonsList() {
@@ -37,6 +42,9 @@ export default {
     },
     hasSearchError() {
       return state.searchHasError;
+    },
+    pokemonId() {
+      return state.pokemonId;
     },
   },
   methods: {
@@ -65,7 +73,7 @@ export default {
   display: flex;
   flex-direction: column;
   width: 100%;
-  height: 100px;
+  height: 100%;
   border: 10px solid color(white);
   border-radius: 8px;
   padding: 0 8px 8px 0;

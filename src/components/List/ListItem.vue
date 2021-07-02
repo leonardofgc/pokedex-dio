@@ -1,5 +1,5 @@
 <template>
-  <li class="list__item">
+  <li class="list__item" @click="selectPokemon">
     <img :src="sprite" :alt="name" class="sprite" />
     <div class="informations">
       <h3 class="identification">
@@ -21,6 +21,7 @@
 </template>
 
 <script>
+import { mutations } from "@/store";
 export default {
   name: "ListItem",
   props: {
@@ -45,6 +46,11 @@ export default {
           values.every((value) => typeof value === "string")
         );
       },
+    },
+  },
+  methods: {
+    selectPokemon() {
+      mutations.setPokemonId(this.id);
     },
   },
 };
